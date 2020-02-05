@@ -21,6 +21,11 @@ class TransitionResponsibilityCheckerStrategy(ABC):
         pass
 
 
+class DefaultTransitionResponsibilityCheckerStrategy(TransitionResponsibilityCheckerStrategy):
+
+    def check_responsibility(self, context, target):
+        return context.type == target
+
 class StartTransitionResponsibilityCheckerStrategy(TransitionResponsibilityCheckerStrategy):
 
     def check_responsibility(self, context, target):

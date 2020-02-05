@@ -3,7 +3,7 @@ from abc import ABC
 
 from app.model.core.context import TransitionType, StateType
 from app.model.exception.exceptions import InvalidTypeException
-from app.service.state.state_service import LoginStateStrategy, CaptchaStateStrategy
+from app.service.state.state_service import LoginStateStrategy, CaptchaStateStrategy, ScrapStateStrategy
 
 
 class StateStrategyBuilder(ABC):
@@ -20,3 +20,5 @@ class StateStrategyBuilder(ABC):
             return LoginStateStrategy()
         if type == StateType.Captcha:
             return CaptchaStateStrategy()
+        if type == StateType.Scrap:
+            return ScrapStateStrategy()

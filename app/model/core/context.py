@@ -9,11 +9,15 @@ class TransitionType(enum.Enum):
     LoginSuccess = 1,
     LoginFailure = 2,
     CaptchaSuccess = 3,
-    CaptchaFailure = 4
+    CaptchaFailure = 4,
+    SlotOpen = 5,
+    SlotClose = 6
+
 
 class StateType(enum.Enum):
     Login = 0,
-    Captcha = 1
+    Captcha = 1,
+    Scrap = 2
 
 
 class ContextModel(ABC):
@@ -39,7 +43,7 @@ class ContextModel(ABC):
     @result.setter
     def result(self, value):
         if not isinstance(value, object):
-            raise InvalidTypeException("value should be of type boolean")
+            raise InvalidTypeException("value should be of type object")
         self.__result = value
 
     @property

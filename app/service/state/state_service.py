@@ -34,3 +34,10 @@ class CaptchaStateStrategy(StateStrategy):
         context.type = TransitionType.CaptchaSuccess
         print("Captcha strategy")
         return context
+
+class ScrapStateStrategy(StateStrategy):
+
+    def execute_strategy(self, context):
+        context.type = TransitionType.SlotOpen
+        print("Scrap strategy")
+        return context

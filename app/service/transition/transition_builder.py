@@ -5,7 +5,8 @@ from app.model.core.context import TransitionType
 from app.model.exception.exceptions import InvalidTypeException
 from app.service.transition.transition_service import LoginSuccessTransitionResponsibilityCheckerStrategy, \
     CaptchaFailureTransitionResponsibilityCheckerStrategy, LoginFailureTransitionResponsibilityCheckerStrategy, \
-    CaptchaSuccessTransitionResponsibilityCheckerStrategy, StartTransitionResponsibilityCheckerStrategy
+    CaptchaSuccessTransitionResponsibilityCheckerStrategy, StartTransitionResponsibilityCheckerStrategy, \
+    DefaultTransitionResponsibilityCheckerStrategy
 
 
 class TransitionResponsibilityCheckerBuilder(ABC):
@@ -28,3 +29,7 @@ class TransitionResponsibilityCheckerBuilder(ABC):
             return LoginFailureTransitionResponsibilityCheckerStrategy()
         if type == TransitionType.LoginSuccess:
             return LoginSuccessTransitionResponsibilityCheckerStrategy()
+        if type == TransitionType.SlotOpen:
+            return DefaultTransitionResponsibilityCheckerStrategy()
+        if type == TransitionType.SlotClose:
+            return DefaultTransitionResponsibilityCheckerStrategy()

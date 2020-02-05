@@ -1,7 +1,7 @@
 import enum
 from abc import ABC
 
-from app.model.core.context import ContextType, StateType
+from app.model.core.context import TransitionType, StateType
 from app.model.exception.exceptions import InvalidTypeException
 from app.service.state.state_service import LoginStateStrategy, CaptchaStateStrategy
 

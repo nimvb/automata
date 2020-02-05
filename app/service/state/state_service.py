@@ -1,6 +1,6 @@
 from abc import ABC, abstractmethod
 
-from app.model.core.context import ContextModel, ContextType
+from app.model.core.context import ContextModel, TransitionType
 from app.model.exception.exceptions import InvalidTypeException
 
 
@@ -24,11 +24,13 @@ class StateStrategy(ABC):
 class LoginStateStrategy(StateStrategy):
     def execute_strategy(self, context):
         print("Login strategy")
+        context.type = TransitionType.LoginSuccess
         return context
 
 
 class CaptchaStateStrategy(StateStrategy):
 
     def execute_strategy(self, context):
+        context.type = TransitionType.CaptchaSuccess
         print("Captcha strategy")
         return context

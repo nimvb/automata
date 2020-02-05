@@ -14,38 +14,38 @@ class TransitionResponsibilityCheckerStrategy(ABC):
         """
         if not isinstance(context, ContextModel):
             raise InvalidTypeException("value should be of type ContextModel")
-        return self.check_responsibility(context)
+        return self.check_responsibility(context, None)
 
     @abstractmethod
-    def check_responsibility(self, context):
+    def check_responsibility(self, context, target):
         pass
 
 
 class StartTransitionResponsibilityCheckerStrategy(TransitionResponsibilityCheckerStrategy):
 
-    def check_responsibility(self, context):
-        return True
+    def check_responsibility(self, context, target):
+        return context.type == target
 
 
 class LoginSuccessTransitionResponsibilityCheckerStrategy(TransitionResponsibilityCheckerStrategy):
 
-    def check_responsibility(self, context):
-        return True
+    def check_responsibility(self, context, target):
+        return context.type == target
 
 
 class LoginFailureTransitionResponsibilityCheckerStrategy(TransitionResponsibilityCheckerStrategy):
 
-    def check_responsibility(self, context):
-        return True
+    def check_responsibility(self, context, target):
+        return context.type == target
 
 
 class CaptchaFailureTransitionResponsibilityCheckerStrategy(TransitionResponsibilityCheckerStrategy):
 
-    def check_responsibility(self, context):
-        return True
+    def check_responsibility(self, context, target):
+        return context.type == target
 
 
 class CaptchaSuccessTransitionResponsibilityCheckerStrategy(TransitionResponsibilityCheckerStrategy):
 
-    def check_responsibility(self, context):
-        return True
+    def check_responsibility(self, context, target):
+        return context.type == target

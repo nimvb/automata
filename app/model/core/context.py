@@ -4,7 +4,7 @@ from abc import ABC
 from app.model.exception.exceptions import InvalidTypeException
 
 
-class ContextType(enum.Enum):
+class TransitionType(enum.Enum):
     Start = 0,
     LoginSuccess = 1,
     LoginFailure = 2,
@@ -20,7 +20,7 @@ class ContextModel(ABC):
     def __init__(self):
         self.__error = False
         self.__result = {}
-        self.__type = ContextType.Start
+        self.__type = TransitionType.Start
 
     @property
     def error(self):
@@ -48,6 +48,6 @@ class ContextModel(ABC):
 
     @type.setter
     def type(self, value):
-        if not isinstance(value, ContextType):
+        if not isinstance(value, TransitionType):
             raise InvalidTypeException("value should be of type ContextType")
         self.__type = value

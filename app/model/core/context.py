@@ -13,8 +13,17 @@ class TransitionType(enum.Enum):
     SlotOpen = 5,
     SlotClose = 6
 
+class AnotherTransitionType(enum.Enum):
+    AnotherStart = 0,
+    AnotherLoginSuccess = 1,
+    AnotherLoginFailure = 2,
+    AnotherCaptchaSuccess = 3,
+    AnotherCaptchaFailure = 4,
+    AnotherSlotOpen = 5,
+    AnotherSlotClose = 6
 
-class StateType(enum.Enum):
+
+class StrategyType(enum.Enum):
     Login = 0,
     Captcha = 1,
     Scrap = 2
@@ -52,6 +61,6 @@ class ContextModel(ABC):
 
     @type.setter
     def type(self, value):
-        if not isinstance(value, TransitionType):
-            raise InvalidTypeException("value should be of type ContextType")
+        if not isinstance(value, enum.Enum):
+            raise InvalidTypeException("value should be of type enum")
         self.__type = value

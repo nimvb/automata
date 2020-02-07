@@ -1,23 +1,26 @@
 import json
 
-from app.model.core.context import ContextModel, TransitionType, StateType
+from app.model.core.context import ContextModel, TransitionType, StrategyType, AnotherTransitionType
 from app.model.core.state import StateModel
 from app.model.core.transition import TransitionModel
+from app.service.state.state_builder import StateStrategyBuilder
 
 
 def entry():
-    state_a = StateModel(StateType.Login)
-    state_b = StateModel(StateType.Captcha)
-    state_c = StateModel(StateType.Scrap)
-    transition_a_b = TransitionModel(state_b, TransitionType.LoginSuccess)
-    transition_b_a = TransitionModel(state_a, TransitionType.CaptchaFailure)
-    transition_b_c = TransitionModel(state_c,TransitionType.CaptchaSuccess)
+    login_strategy = StateStrategyBuilder().build(StrategyType.Login)
+    captcha_strategy = StateStrategyBuilder().build(StrategyType.Captcha)
+    scrap_strategy = StateStrategyBuilder().build(StrategyType.Scrap)
+    state_a = StateModel(login_strategy)
+    state_b = StateModel(captcha_strategy)
+    state_c = StateModel(scrap_strategy)
+    transition_a_b = TransitionModel(state_b, lambda x: x == AnotherTransitionType.AnotherLoginSuccess)
+    transition_b_a = TransitionModel(state_a, lambda x: x == AnotherTransitionType.AnotherCaptchaFailure)
+    transition_b_c = TransitionModel(state_c, lambda x: x == AnotherTransitionType.AnotherCaptchaSuccess)
     state_a.transitions.append(transition_a_b)
     state_b.transitions.append(transition_b_a)
     state_b.transitions.append(transition_b_c)
 
     context = ContextModel()
-    context.type = TransitionType.Start
 
     current = state_a
     count = 0

@@ -6,7 +6,7 @@ from app.model.exception.exceptions import InvalidTypeException
 
 class TransitionResponsibilityCheckerStrategy(ABC):
 
-    def responsible(self, context):
+    def responsible(self, context,target):
         """
 
         :param context: ContextModel
@@ -14,7 +14,7 @@ class TransitionResponsibilityCheckerStrategy(ABC):
         """
         if not isinstance(context, ContextModel):
             raise InvalidTypeException("value should be of type ContextModel")
-        return self.check_responsibility(context, None)
+        return self.check_responsibility(context, target)
 
     @abstractmethod
     def check_responsibility(self, context, target):

@@ -1,9 +1,9 @@
 import enum
 from abc import ABC
 
-from app.model.core.context import TransitionType, StateType
+from app.model.core.context import TransitionType, StrategyType
 from app.model.exception.exceptions import InvalidTypeException
-from app.service.state.state_service import LoginStateStrategy, CaptchaStateStrategy, ScrapStateStrategy
+from app.service.state.state_service import StateStrategy, LoginStateStrategy, CaptchaStateStrategy, ScrapStateStrategy
 
 
 class StateStrategyBuilder(ABC):
@@ -12,13 +12,13 @@ class StateStrategyBuilder(ABC):
         """
 
         :param type: TransitionResponsibilityCheckerType
-        :return: TransitionResponsibilityCheckerStrategy
+        :return: StateStrategy
         """
-        if not isinstance(type, StateType):
+        if not isinstance(type, StrategyType):
             raise InvalidTypeException("value should be in format of StateType")
-        if type == StateType.Login:
+        if type == StrategyType.Login:
             return LoginStateStrategy()
-        if type == StateType.Captcha:
+        if type == StrategyType.Captcha:
             return CaptchaStateStrategy()
-        if type == StateType.Scrap:
+        if type == StrategyType.Scrap:
             return ScrapStateStrategy()

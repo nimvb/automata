@@ -17,7 +17,7 @@ class TransitionResponsibilityCheckerBuilder(ABC):
         :param type: TransitionResponsibilityCheckerType
         :return: TransitionResponsibilityCheckerStrategy
         """
-        if not isinstance(type, TransitionType):
+        if not isinstance(type, enum.Enum):
             raise InvalidTypeException("value should be in format of ContextType")
         if type == TransitionType.Start:
             return StartTransitionResponsibilityCheckerStrategy()

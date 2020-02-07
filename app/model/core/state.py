@@ -1,9 +1,10 @@
 from abc import ABC
 from uuid import uuid4
 
-from app.model.core.context import ContextModel, StateType
+from app.model.core.context import ContextModel, StrategyType
 from app.model.exception.exceptions import InvalidTypeException
 from app.service.state.state_builder import StateStrategyBuilder
+from app.service.state.state_service import StateStrategy
 
 
 class StateModel(ABC):
@@ -12,7 +13,8 @@ class StateModel(ABC):
         self.__error = False
         self.__transitions = []
         self.__name = uuid4()
-        self.__strategy = strategy
+        self.__strategy = None
+        self.strategy = strategy
 
     @property
     def final(self):
@@ -39,8 +41,14 @@ class StateModel(ABC):
         return self.__strategy
 
     @strategy.setter
+    def strategy(self, value):
+        if not isinstance(value, StateStrategy):
+            raise InvalidTypeException("value should be of type StateStrategy")
+        self.__strategy = value
+
+    @strategy.setter
     def error(self, value):
-        if not isinstance(value, StateType):
+        if not isinstance(value, StrategyType):
             raise InvalidTypeException("value should be of type StateType")
         self.__strategy = value
 
@@ -57,7 +65,7 @@ class StateModel(ABC):
     def next(self, context):
         if not isinstance(context, ContextModel):
             raise InvalidTypeException("value should be of type ContextModel")
-        context = StateStrategyBuilder().build(self.strategy).execute_strategy(context)
+        context = self.strategy.execute(context)
         candidates = list(filter(lambda transition: transition.responsible(context), self.__transitions))
         if candidates:
             candidate = candidates[0]
